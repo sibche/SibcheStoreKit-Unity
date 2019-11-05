@@ -1,7 +1,4 @@
-﻿//#define UNITY_IOS
-//#undef UNITY_EDITOR
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
