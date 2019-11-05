@@ -42,7 +42,7 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 var packagesArray = node["packagesArray"].AsArray;
                 List<SibchePackage> packages = new List<SibchePackage>();
@@ -51,7 +51,7 @@ namespace SibcheStoreKit
                     var package = SibchePackageFactory.GetSibchePackage(item.Value);
                     packages.Add(package);
                 }
-                Sibche.OnFetchPackages(isSuccessfull, error, packages);
+                Sibche.OnFetchPackages(isSuccessful, error, packages);
             }
             catch (Exception ex)
             {
@@ -64,10 +64,10 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 SibchePackage package = node["package"].Value.Length > 0 ? SibchePackageFactory.GetSibchePackage(node["package"].Value) : null;
-                Sibche.OnFetchPackage(isSuccessfull, error, package);
+                Sibche.OnFetchPackage(isSuccessful, error, package);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 var purchasePackagesArray = node["purchasePackagesArray"].AsArray;
                 List<SibchePurchasePackage> purchasePackages = new List<SibchePurchasePackage>();
@@ -89,7 +89,7 @@ namespace SibcheStoreKit
                     var purchasePackage = new SibchePurchasePackage(item.Value);
                     purchasePackages.Add(purchasePackage);
                 }
-                Sibche.OnFetchActivePackages(isSuccessfull, error, purchasePackages);
+                Sibche.OnFetchActivePackages(isSuccessful, error, purchasePackages);
             }
             catch (Exception ex)
             {
@@ -102,11 +102,11 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 SibchePurchasePackage purchasePackage = node["purchasePackage"].Value.Length > 0 ? new SibchePurchasePackage(node["purchasePackage"].Value) : null;
 
-                Sibche.OnPurchase(isSuccessfull, error, purchasePackage);
+                Sibche.OnPurchase(isSuccessful, error, purchasePackage);
             }
             catch (Exception ex)
             {
@@ -119,10 +119,10 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
 
-                Sibche.OnConsume(isSuccessfull, error);
+                Sibche.OnConsume(isSuccessful, error);
             }
             catch (Exception ex)
             {
