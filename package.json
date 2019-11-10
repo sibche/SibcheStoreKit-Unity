@@ -1,6 +1,6 @@
 {
     "name": "com.sibche",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "displayName": "SibcheStoreKit",
     "description": "Sibche's storekit made for unity iOS apps",
     "unity": "2018.1",
