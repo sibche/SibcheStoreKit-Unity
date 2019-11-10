@@ -1,37 +1,46 @@
-﻿using UnityEngine;
-using System.Runtime.InteropServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
+using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace SibcheStoreKit
 {
+    public enum LoginStatusType
+    {
+        LoggedIn = 1,
+        LoggedOut = 2,
+        HaveTokenButFailedToCheck = 3,
+    }
+
     public class Sibche
     {
 #if UNITY_IOS && !UNITY_EDITOR
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitInit(string appKey, string appUrlScheme);
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitInit (string appKey, string appUrlScheme);
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitLogin();
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitLogin ();
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitLogout();
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitLogout ();
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitFetchInAppPurchasePackages();
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitFetchInAppPurchasePackages ();
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitFetchInAppPurchasePackage(string packageId);
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitFetchInAppPurchasePackage (string packageId);
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitFetchActiveInAppPurchasePackages();
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitFetchActiveInAppPurchasePackages ();
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitPurchasePackage(string packageId);
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitPurchasePackage (string packageId);
 
-		[DllImport ("__Internal")]
-		private static extern void _SibcheStoreKitConsumePackage(string purchasePackageId);
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitConsumePackage (string purchasePackageId);
+
+        [DllImport ("__Internal")]
+        private static extern void _SibcheStoreKitGetCurrentUserData ();
 #endif
 
         private static GameObject sibcheManager;
@@ -42,6 +51,7 @@ namespace SibcheStoreKit
         private static List<Action<bool, SibcheError, List<SibchePurchasePackage>>> fetchActivePackagesPool = new List<Action<bool, SibcheError, List<SibchePurchasePackage>>>();
         private static List<Action<bool, SibcheError, SibchePurchasePackage>> purchasePool = new List<Action<bool, SibcheError, SibchePurchasePackage>>();
         private static List<Action<bool, SibcheError>> consumePool = new List<Action<bool, SibcheError>>();
+        private static List<Action<bool, SibcheError, LoginStatusType, string, string>> getCurrenUserDataPool = new List<Action<bool, SibcheError, LoginStatusType, string, string>>();
 
         /// <summary>
         /// Initializes Sibche SDK with the specified key and app open url scheme.
@@ -51,13 +61,12 @@ namespace SibcheStoreKit
         public static void Initialize(string appKey, string appUrlScheme)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            if(sibcheManager==null)
-            {
-            	sibcheManager = new GameObject ("SibcheManager");
-            	UnityEngine.Object.DontDestroyOnLoad (sibcheManager);
-            	sibcheManager.AddComponent<SibcheMessageHandler>();
+            if (sibcheManager == null) {
+                sibcheManager = new GameObject ("SibcheManager");
+                UnityEngine.Object.DontDestroyOnLoad (sibcheManager);
+                sibcheManager.AddComponent<SibcheMessageHandler> ();
             }
-			_SibcheStoreKitInit(appKey, appUrlScheme);
+            _SibcheStoreKitInit (appKey, appUrlScheme);
 #endif
         }
 
@@ -68,8 +77,8 @@ namespace SibcheStoreKit
         public static void Login(Action<bool, SibcheError, string, string> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            loginPool.Add(callback);
-			_SibcheStoreKitLogin();
+            loginPool.Add (callback);
+            _SibcheStoreKitLogin ();
 #endif
         }
 
@@ -80,8 +89,8 @@ namespace SibcheStoreKit
         public static void Logout(Action callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            logoutPool.Add(callback);
-            _SibcheStoreKitLogout();
+            logoutPool.Add (callback);
+            _SibcheStoreKitLogout ();
 #endif
         }
 
@@ -92,8 +101,8 @@ namespace SibcheStoreKit
         public static void FetchPackages(Action<bool, SibcheError, List<SibchePackage>> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            fetchPackagesPool.Add(callback);
-            _SibcheStoreKitFetchInAppPurchasePackages();
+            fetchPackagesPool.Add (callback);
+            _SibcheStoreKitFetchInAppPurchasePackages ();
 #endif
         }
 
@@ -105,8 +114,8 @@ namespace SibcheStoreKit
         public static void FetchPackage(string packageId, Action<bool, SibcheError, SibchePackage> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            fetchPackagePool.Add(callback);
-            _SibcheStoreKitFetchInAppPurchasePackage(packageId);
+            fetchPackagePool.Add (callback);
+            _SibcheStoreKitFetchInAppPurchasePackage (packageId);
 #endif
         }
 
@@ -117,8 +126,8 @@ namespace SibcheStoreKit
         public static void FetchActivePackages(Action<bool, SibcheError, List<SibchePurchasePackage>> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            fetchActivePackagesPool.Add(callback);
-            _SibcheStoreKitFetchActiveInAppPurchasePackages();
+            fetchActivePackagesPool.Add (callback);
+            _SibcheStoreKitFetchActiveInAppPurchasePackages ();
 #endif
         }
 
@@ -130,27 +139,39 @@ namespace SibcheStoreKit
         public static void Purchase(string packageId, Action<bool, SibcheError, SibchePurchasePackage> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            purchasePool.Add(callback);
-			_SibcheStoreKitPurchasePackage(packageId);
+            purchasePool.Add (callback);
+            _SibcheStoreKitPurchasePackage (packageId);
 #endif
         }
 
         /// <summary>
-        /// 
+        /// This function tries to consume consumable in app purchased package with purchasePackageId
         /// </summary>
         /// <param name="purchasePackageId">Id of purchased (consumable) package which you want to consume that</param>
         /// <param name="callback">Callback that called when task is finished</param>
         public static void Consume(string purchasePackageId, Action<bool, SibcheError> callback)
         {
 #if UNITY_IOS && !UNITY_EDITOR
-            consumePool.Add(callback);
-			_SibcheStoreKitPurchasePackage(purchasePackageId);
+            consumePool.Add (callback);
+            _SibcheStoreKitConsumePackage (purchasePackageId);
+#endif
+        }
+
+        /// <summary>
+        /// Gets current user data if logged in
+        /// </summary>
+        /// <param name="callback">Callback that called when task is finished</param>
+        public static void GetCurrentUserData(Action<bool, SibcheError, LoginStatusType, string, string> callback)
+        {
+#if UNITY_IOS && !UNITY_EDITOR
+            getCurrenUserDataPool.Add (callback);
+            _SibcheStoreKitGetCurrentUserData ();
 #endif
         }
 
         public static void OnLogin(bool isLoginSuccessful, SibcheError error, string userName, string userId)
         {
-            for (int i = 0; i < loginPool.Count; i++)
+            for (int i = loginPool.Count - 1; i >= 0; i--)
             {
                 loginPool[i](isLoginSuccessful, error, userName, userId);
                 loginPool.RemoveAt(i);
@@ -159,7 +180,7 @@ namespace SibcheStoreKit
 
         public static void OnLogout()
         {
-            for (int i = 0; i < logoutPool.Count; i++)
+            for (int i = logoutPool.Count - 1; i >= 0; i--)
             {
                 logoutPool[i]();
                 logoutPool.RemoveAt(i);
@@ -168,7 +189,7 @@ namespace SibcheStoreKit
 
         public static void OnFetchPackages(bool isSuccessful, SibcheError error, List<SibchePackage> packages)
         {
-            for (int i = 0; i < fetchPackagesPool.Count; i++)
+            for (int i = fetchPackagesPool.Count - 1; i >= 0; i--)
             {
                 fetchPackagesPool[i](isSuccessful, error, packages);
                 fetchPackagesPool.RemoveAt(i);
@@ -177,7 +198,7 @@ namespace SibcheStoreKit
 
         public static void OnFetchPackage(bool isSuccessful, SibcheError error, SibchePackage package)
         {
-            for (int i = 0; i < fetchPackagePool.Count; i++)
+            for (int i = fetchPackagePool.Count - 1; i >= 0; i--)
             {
                 fetchPackagePool[i](isSuccessful, error, package);
                 fetchPackagePool.RemoveAt(i);
@@ -186,7 +207,7 @@ namespace SibcheStoreKit
 
         public static void OnFetchActivePackages(bool isSuccessful, SibcheError error, List<SibchePurchasePackage> purchasePackages)
         {
-            for (int i = 0; i < fetchActivePackagesPool.Count; i++)
+            for (int i = fetchActivePackagesPool.Count - 1; i >= 0; i--)
             {
                 fetchActivePackagesPool[i](isSuccessful, error, purchasePackages);
                 fetchActivePackagesPool.RemoveAt(i);
@@ -195,7 +216,7 @@ namespace SibcheStoreKit
 
         public static void OnPurchase(bool isSuccessful, SibcheError error, SibchePurchasePackage purchasePackage)
         {
-            for (int i = 0; i < purchasePool.Count; i++)
+            for (int i = purchasePool.Count - 1; i >= 0; i--)
             {
                 purchasePool[i](isSuccessful, error, purchasePackage);
                 purchasePool.RemoveAt(i);
@@ -204,12 +225,20 @@ namespace SibcheStoreKit
 
         public static void OnConsume(bool isSuccessful, SibcheError error)
         {
-            for (int i = 0; i < consumePool.Count; i++)
+            for (int i = consumePool.Count - 1; i >= 0; i--)
             {
                 consumePool[i](isSuccessful, error);
                 consumePool.RemoveAt(i);
             }
         }
+
+        public static void OnGetCurrentUserData(bool isSuccessful, SibcheError error, LoginStatusType loginStatus, string userCellphoneNumber, string userId)
+        {
+            for (int i = getCurrenUserDataPool.Count - 1; i >= 0; i--)
+            {
+                getCurrenUserDataPool[i](isSuccessful, error, loginStatus, userCellphoneNumber, userId);
+                getCurrenUserDataPool.RemoveAt(i);
+            }
+        }
     }
 }
-

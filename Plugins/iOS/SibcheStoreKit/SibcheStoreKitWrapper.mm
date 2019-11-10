@@ -180,4 +180,18 @@ extern "C" {
             SafeUnitySendMessage(MakeStringCopy(@"NotifyConsume"),MakeStringCopy(str));
         }];
     }
+    
+    void _SibcheStoreKitGetCurrentUserData(){
+        [SibcheStoreKit getCurrentUserData:^(BOOL isSuccessful, SibcheError *error, LoginStatusType loginStatus, NSString *userCellphoneNumber, NSString *userId) {
+            NSDictionary* dictionary = @{
+                                         @"isSuccessful": isSuccessful ? @1 : @0,
+                                         @"error": error ? [error toJson] : @"",
+                                         @"loginStatus": [NSNumber numberWithInt:loginStatus],
+                                         @"userCellphoneNumber": userCellphoneNumber,
+                                         @"userId": userId,
+                                         };
+            NSString* str = changeDictionaryToJson(dictionary);
+            SafeUnitySendMessage(MakeStringCopy(@"NotifyGetCurrentUserData"),MakeStringCopy(str));
+        }];
+    }
 }

@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
-using SimpleJSON;
 using System.Collections.Generic;
+using SimpleJSON;
+using UnityEngine;
 
 namespace SibcheStoreKit
 {
@@ -42,7 +42,7 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 var packagesArray = node["packagesArray"].AsArray;
                 List<SibchePackage> packages = new List<SibchePackage>();
@@ -51,7 +51,7 @@ namespace SibcheStoreKit
                     var package = SibchePackageFactory.GetSibchePackage(item.Value);
                     packages.Add(package);
                 }
-                Sibche.OnFetchPackages(isSuccessful, error, packages);
+                Sibche.OnFetchPackages(isSuccessfull, error, packages);
             }
             catch (Exception ex)
             {
@@ -64,10 +64,10 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 SibchePackage package = node["package"].Value.Length > 0 ? SibchePackageFactory.GetSibchePackage(node["package"].Value) : null;
-                Sibche.OnFetchPackage(isSuccessful, error, package);
+                Sibche.OnFetchPackage(isSuccessfull, error, package);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 var purchasePackagesArray = node["purchasePackagesArray"].AsArray;
                 List<SibchePurchasePackage> purchasePackages = new List<SibchePurchasePackage>();
@@ -89,7 +89,7 @@ namespace SibcheStoreKit
                     var purchasePackage = new SibchePurchasePackage(item.Value);
                     purchasePackages.Add(purchasePackage);
                 }
-                Sibche.OnFetchActivePackages(isSuccessful, error, purchasePackages);
+                Sibche.OnFetchActivePackages(isSuccessfull, error, purchasePackages);
             }
             catch (Exception ex)
             {
@@ -102,11 +102,11 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
                 SibchePurchasePackage purchasePackage = node["purchasePackage"].Value.Length > 0 ? new SibchePurchasePackage(node["purchasePackage"].Value) : null;
 
-                Sibche.OnPurchase(isSuccessful, error, purchasePackage);
+                Sibche.OnPurchase(isSuccessfull, error, purchasePackage);
             }
             catch (Exception ex)
             {
@@ -119,10 +119,30 @@ namespace SibcheStoreKit
             try
             {
                 JSONNode node = JSON.Parse(str);
-                bool isSuccessful = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
                 SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
 
-                Sibche.OnConsume(isSuccessful, error);
+                Sibche.OnConsume(isSuccessfull, error);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("SibcheStoreKit: " + ex.Message);
+            }
+        }
+
+        public void NotifyGetCurrentUserData(String str)
+        {
+            try
+            {
+                JSONNode node = JSON.Parse(str);
+                bool isSuccessfull = int.Parse(node["isSuccessful"].Value) > 0 ? true : false;
+                SibcheError error = node["error"].Value.Length > 0 ? new SibcheError(node["error"].Value) : null;
+                LoginStatusType loginStatus;
+                Enum.TryParse(node["loginStatus"].Value, out loginStatus);
+                string userCellphoneNumber = node["userCellphoneNumber"].Value;
+                string userId = node["userId"];
+
+                Sibche.OnGetCurrentUserData(isSuccessfull, error, loginStatus, userCellphoneNumber, userId);
             }
             catch (Exception ex)
             {
