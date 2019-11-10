@@ -10,6 +10,12 @@
 FOUNDATION_EXPORT double SibcheStoreKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char SibcheStoreKitVersionString[];
 
+typedef enum LoginStatusType : int {
+    loginStatusTypeIsLoggedIn = 1,
+    loginStatusTypeIsLoggedOut = 2,
+    loginStatusTypeHaveTokenButFailedToCheck = 3,
+} LoginStatusType;
+
 typedef void (^ProfileCallback)(BOOL isSuccessful, SibcheError* error, NSString* userName, NSString* userId);
 typedef void (^PackageCallback)(BOOL isSuccessful, SibcheError* error, SibchePackage* package);
 typedef void (^PackagesCallback)(BOOL isSuccessful, SibcheError* error, NSArray* packagesArray);
@@ -18,6 +24,7 @@ typedef void (^PurchasePackageCallback)(BOOL isSuccessful, SibcheError* error, S
 typedef void (^PurchaseCallback)(BOOL isSuccessful, SibcheError* error, SibchePurchasePackage* purchasePackage);
 typedef void (^ConsumeCallback)(BOOL isSuccessful, SibcheError* error);
 typedef void (^LogoutCallback)(void);
+typedef void (^CurrentUserCallback)(BOOL isSuccessful, SibcheError* error, LoginStatusType loginStatus, NSString* userCellphoneNumber, NSString* userId);
 
 
 @interface SibcheStoreKit : NSObject
@@ -37,7 +44,7 @@ typedef void (^LogoutCallback)(void);
 // This command says SDK to show login view and return result
 + (void)loginUser:(ProfileCallback)loginFinishCallback;
 
-// This command used to logout user from sibche. Don't use unless you know what are you doing
+// This command used to logout user from sibche. Don't use unless you know what you are doing
 + (void)logoutUser:(LogoutCallback)logoutFinishCallback;
 
 // Purchase specific packageId. After finishing, we call PurchaseCallback
@@ -48,6 +55,9 @@ typedef void (^LogoutCallback)(void);
 
 // Consumes purchased package item (if is consumable)
 + (void)consumePurchasePackage:(NSString*)purchasePackageId withCallback:(ConsumeCallback)consumeCallback;
+
+// Gets current user's data including of login status, user cellphone number and userId
++ (void)getCurrentUserData:(CurrentUserCallback)currentUserCallback;
 
 typedef enum ActionAfterLogin : NSUInteger {
     dismiss,
