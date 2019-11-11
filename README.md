@@ -2,14 +2,14 @@
 
 ## <div dir="rtl">نیازمندیهای نصب کیت توسعه دهندگان</div>
 
-1. <div dir="rtl">بارگزاری برنامه در [پنل توسعه‌دهندگان سیبچه](https://sibche.com/developer)</div>
+1. <div dir="rtl">بارگزاری برنامه در <a href="https://sibche.com/developer">پنل توسعه‌دهندگان سیبچه</a></div>
 2. <div dir="rtl">دریافت کلید برنامه از پنل توسعه‌دهندگان</div>
 3. <div dir="rtl">آخرین نسخه‌ی Xcode</div>
 4. <div dir="rtl">داشتن unity v2019.1 به بالا</div>
 
 ## <div dir="rtl">نصب کیت توسعه‌دهندگان</div>
 
-<div dir="rtl">کیت توسعه‌دهندگان سیبچه مختص یونیتی را می‌توانید از [اینجا](https://github.com/sibche/SibcheStoreKit-Unity/releases/latest/download/SibcheStoreKit.unitypackage) دانلود کرده و به پروژه خود اضافه کنید.</div>
+<div dir="rtl">کیت توسعه‌دهندگان سیبچه مختص یونیتی را می‌توانید از <a href="https://github.com/sibche/SibcheStoreKit-Unity/releases/latest/download/SibcheStoreKit.unitypackage">اینجا</a> دانلود کرده و به پروژه خود اضافه کنید.</div>
 
 ## <div dir="rtl">تنظیمات اولیه</div>
 
@@ -40,14 +40,12 @@ AddCustomUrlScheme(path, "testapp", "test");
 
 <div dir="rtl">
 به جای test، نام دلخواهی را تنظیم کرده و به جای testapp بایستی scheme مورد نظرتان را وارد نمایید. به عنوان مثال scheme تنظیم شده **تلگرام** `tg` و scheme تنظیم شده برای برنامه **اینستاگرام** `instagram` میباشد. لیست کامل scheme برنامه‌های معروف را میتوانید از
-[اینجا](https://ios.gadgethacks.com/news/always-updated-list-ios-app-url-scheme-names-0184033/)
+<a href="https://ios.gadgethacks.com/news/always-updated-list-ios-app-url-scheme-names-0184033/">اینجا</a>
 مشاهده نمایید.
 </div>
 
 <div dir="rtl">
-<aside class="warning">
 توصیه اکید می‌شود از scheme استفاده کنید که مختص شما باشد و ترجیحا طولانی باشد. توجه فرمایید که اگر با برنامه‌های دیگر در تداخل باشد، در فرآیند پرداخت دچار مشکل خواهید شد.
-</aside>
 </div>
 
 ### <div dir="rtl">افزودن فایل .framework به عنوان کتابخانه دینامیک (embedded framework)</div>
@@ -88,14 +86,11 @@ public class GameController : MonoBehaviour
 
 <div dir="rtl">برای خرید، فعال‌سازی و استفاده از بسته‌های سیبچه، کلاسهای زیر ایجاد شده است که در ادامه در مورد هر کدام توضیحاتی ارائه خواهیم کرد.</div>
 
-- <div dir="rtl">`SibchePackage`:</div>
-<div dir="rtl">این کلاس، نمایانگر بسته قابل خریدی هست که داخل پنل توسعه‌دهندگان اقدام به تعریفشان کرده‌اید. </div>
+- <div dir="rtl">`SibchePackage`: این کلاس، نمایانگر بسته قابل خریدی هست که داخل پنل توسعه‌دهندگان اقدام به تعریفشان کرده‌اید. </div>
 
-- <div dir="rtl">`SibchePurchasePackage`:</div>
-<div dir="rtl">این کلاس، نمایانگر خرید متناظری از کاربر هست که به یک بسته SibchePackage اختصاص یافته است. این کلاس، شامل اطلاعات خرید، زمان خرید، و تاریخ انقضا و ... خواهد بود.</div>
+- <div dir="rtl">`SibchePurchasePackage`: این کلاس، نمایانگر خرید متناظری از کاربر هست که به یک بسته SibchePackage اختصاص یافته است. این کلاس، شامل اطلاعات خرید، زمان خرید، و تاریخ انقضا و ... خواهد بود.</div>
 
-- <div dir="rtl">`SibcheError`:</div>
-<div dir="rtl">این کلاس، در مواقع رخداد خطا به شما ارجاع داده خواهد شد که شامل اطلاعات بیشتر از خطاهای رخ داده است. اطلاعاتی از قبیل خطا و Http status code و ...</div>
+- <div dir="rtl">`SibcheError`:این کلاس، در مواقع رخداد خطا به شما ارجاع داده خواهد شد که شامل اطلاعات بیشتر از خطاهای رخ داده است. اطلاعاتی از قبیل خطا و Http status code و ...</div>
  
  
 ### <div dir="rtl">SibchePackage</div>
@@ -104,18 +99,14 @@ public class GameController : MonoBehaviour
 - <div dir="rtl">
   بسته‌های قابل خرید مصرفی یا `SibcheConsumablePackage`:
    بسته‌هایی که قابل مصرف هستند که خریداری شده و داخل بازی یا برنامه مصرف می‌شود. مانند بسته‌ی ۵۰۰ سکه طلا یا شارژ قابل مصرف داخل برنامه.
-  </div>
 
-<div dir="rtl">
 این بسته ها تا زمانی که مصرف نشده‌اند، فعال و معتبر می‌باشند و پس از مصرف، قابل خرید مجدد هستند. 
 </div>
 
 - <div dir="rtl">
   بسته‌های قابل خرید غیر مصرفی یا `SibcheNonConsumablePackage`:
   بسته‌هایی که قابل مصرف نیستند و فقط یکبار خریداری می‌شوند. مانند بسته‌ی باز شدن قابلیت آپلود آواتار یا تغییر نام.
-  </div>
 
-<div dir="rtl">
 این بسته ها، فقط یکبار قابل خرید هستند و پس از خرید، همواره در لیست بسته‌های فعال کاربر خواهند بود.
 </div>
 
@@ -123,9 +114,7 @@ public class GameController : MonoBehaviour
 - <div dir="rtl">
   بسته‌های اشتراک یا `SibcheSubscriptionPackage`:
   بسته‌هایی هستند که به مدت محدود قابل استفاده بوده و پس از اتمام زمان آنها، کاربر مجاز به استفاده از آن قابلیت نیست. به عنوان مثال، قابلیت استفاده از امکانات ویژه به مدت یک سال
-  </div>
 
-<div dir="rtl">
 همه این سه کلاس از کلاس والد `SibchePackage` گرفته شده‌اند و به صورت عمومی شامل خصوصیات زیر هستند.
 </div>
 
@@ -176,7 +165,6 @@ public int statusCode;
 - <div dir="rtl">message: پیغام خطایی هست که از طرف سرور دریافت شده است.</div>
 - <div dir="rtl">statusCode:  همان شماره خطای http هست که سرور در جواب درخواست ما داده است.</div>
 
-<div dir="rtl">
 | شماره errorCode | دلیل خطای مربوطه                         |
 | --------------- | ---------------------------------------- |
 | 1000            | خطای نامشخص                              |
@@ -184,7 +172,6 @@ public int statusCode;
 | 1002            | کاربر از ادامه عملیات منصرف شد                 |
 | 1003            | در فرایند ورود (لاگین) دچار مشکل شده‌ایم |
 | 1004            |  برنامه به درستی initiate نشده است |
-</div>
 
 ## <div dir="rtl">گرفتن لیست بسته‌های قابل خرید</div>
 
@@ -282,9 +269,7 @@ Sibche.FetchActivePackages((bool isSuccessful, SibcheError error, List<SibchePur
 ## <div dir="rtl">مصرف کردن بسته‌ها در سمت کلاینت</div>
 
 <div dir="rtl">
-<aside class="success">
 در صورتی که بخواهید بسته‌های قابل مصرف را در سمت کلاینت (درون خود بازی/برنامه) مصرف کنید، بایستی از این روش استفاده کنید. ولی اگر قصد مصرف و اعتبارسنجی سمت سرور داشته باشید، به بخش بعدی مراجعه نمایید.
-</aside>
 </div>
 
 <div dir="rtl">برای مصرف کردن بسته‌های قابل مصرف (Consumable) بایستی شبیه دستور زیر، تابع مربوطه از کیت توسعه‌دهندگان را فراخوانی کنیم:</div>
