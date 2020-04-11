@@ -1,17 +1,17 @@
 {
-    "name": "com.sibche",
-    "version": "1.0.2",
-    "displayName": "SibcheStoreKit",
-    "description": "Sibche's storekit made for unity iOS apps",
-    "unity": "2018.1",
-    "keywords": [
-        "Sibche",
-        "Sib",
-        "che"
-    ],
-    "author": {
-        "name": "Sibche",
-        "email": "developer@sibche.com",
-        "url": "https://www.sibche.com"
-    }
+  "name": "com.sibche",
+  "version": "1.1.0",
+  "displayName": "SibcheStoreKit",
+  "description": "Sibche's storekit made for unity iOS apps",
+  "unity": "2019.1",
+  "keywords": [
+    "Sibche",
+    "Sib",
+    "che"
+  ],
+  "author": {
+    "name": "Sibche",
+    "email": "developer@sibche.com",
+    "url": "https://www.sibche.com"
+  }
 }
